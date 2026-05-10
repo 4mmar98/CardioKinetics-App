@@ -29,7 +29,7 @@ st.markdown("""
         padding-right: 1rem;
         max-width: 100%;
     }
-
+    
     /* Headers - Hospital Blue Theme & Larger */
     h1 {
         color: #003366; /* Dark Navy Blue */
@@ -51,32 +51,32 @@ st.markdown("""
         font-weight: 600;
         font-size: 1.6rem !important;
     }
-
+    
     /* Button Styling - SOLID BLUE BACKGROUND WITH WHITE TEXT */
     div.stButton > button {
-        background-color: #003366 !important;
-        color: #FFFFFF !important;
+        background-color: #003366 !important; 
+        color: #FFFFFF !important; 
         font-weight: 800;
-        height: 65px;
-        font-size: 1.2rem !important;
+        height: 65px; 
+        font-size: 1.2rem !important; 
         border: 3px solid #003366 !important;
         border-radius: 10px;
         width: 100%;
         transition: all 0.2s ease;
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        margin-top: 10px;
+        margin-top: 10px; 
     }
-
+    
     div.stButton > button:hover {
-        background-color: #004080 !important;
+        background-color: #004080 !important; 
         border-color: #004080 !important;
         color: #FFFFFF !important;
         transform: translateY(-2px);
         box-shadow: 0 6px 8px rgba(0,0,0,0.2);
     }
-
+    
     div.stButton > button:active {
-        background-color: #002244 !important;
+        background-color: #002244 !important; 
         border-color: #002244 !important;
         transform: translateY(0);
         color: #FFFFFF !important;
@@ -84,48 +84,48 @@ st.markdown("""
 
     /* --- FIXED INPUT STYLING --- */
     div[data-baseweb="input"] {
-        min-height: 65px;
-        border-radius: 10px;
-        background-color: #003366;
+        min-height: 65px; 
+        border-radius: 10px; 
+        background-color: #003366; 
         border: 2px solid #003366;
         display: flex;
-        align-items: center;
+        align-items: center; 
     }
-
+    
     div[data-baseweb="select"] > div {
         min-height: 65px;
         border-radius: 10px;
         border: 2px solid #003366;
-        background-color: #003366;
+        background-color: #003366; 
         display: flex;
         align-items: center;
     }
-
+    
     div[data-baseweb="input"] input {
         font-size: 1.2rem;
-        color: #FFFFFF;
-        caret-color: #FFFFFF;
+        color: #FFFFFF; 
+        caret-color: #FFFFFF; 
         padding-left: 10px;
-        height: 100%;
+        height: 100%; 
         min-height: 60px;
     }
-
+    
     div[data-baseweb="select"] div {
         font-size: 1.2rem;
-        color: #FFFFFF;
+        color: #FFFFFF; 
     }
-
+    
     div[data-baseweb="input"] input[type="number"] {
          color: #FFFFFF;
     }
-
+    
     div[data-baseweb="select"] svg {
         fill: #FFFFFF;
     }
 
     /* Metric Cards Styling */
     div[data-testid="metric-container"] {
-        background-color: #F0F7FF;
+        background-color: #F0F7FF; 
         border: 2px solid #0059b3;
         padding: 25px;
         border-radius: 12px;
@@ -143,37 +143,35 @@ st.markdown("""
     }
     div[data-testid="metric-container"] div[data-testid="stMetricValue"] {
         color: #002244;
-        font-size: 2.5rem !important;
+        font-size: 2.5rem !important; 
     }
 
     /* Tabs Styling */
     .stTabs [data-baseweb="tab-list"] {
-        gap: 20px;
+        gap: 20px; 
         margin-bottom: 20px;
     }
     .stTabs [data-baseweb="tab"] {
         height: 60px;
         font-size: 1.2rem;
         white-space: pre-wrap;
-        background-color: #FFFFFF;
-        border: 2px solid #003366;
+        background-color: #FFFFFF; 
+        border: 2px solid #003366; 
         border-radius: 8px;
-        color: #003366;
+        color: #003366; 
         font-weight: 700;
-        flex-grow: 1;
+        flex-grow: 1; 
         text-align: center;
     }
     .stTabs [aria-selected="true"] {
-        background-color: #003366;
-        color: #FFFFFF;
+        background-color: #003366; 
+        color: #FFFFFF; 
         border: 2px solid #003366;
     }
 </style>
 """, unsafe_allow_html=True)
 
 # --- DATA LOADING FUNCTION ---
-
-
 @st.cache_data
 def load_data():
     def clean_header(c):
@@ -201,9 +199,8 @@ def load_data():
         c_title = c_title.replace("Css,Avg", "Css,avg")
         c_title = c_title.replace("Lod", "LOD")
         c_title = c_title.replace("Det. Window", "Detection Window")
-
-        c_title = c_title.replace(
-            "R (Accum. Factor)", "Accumulation Factor (R)")
+        c_title = c_title.replace("Single Dose", "Single Dose")
+        c_title = c_title.replace("R (Accum. Factor)", "Accumulation Factor (R)")
         c_title = c_title.replace("(H)", "(h)")
         c_title = c_title.replace("(Days)", "(days)")
 
@@ -225,14 +222,12 @@ def load_data():
             else:
                 df = pd.read_excel(selected_file)
 
-            rename_map = {"Drug": "Name",
-                          "Drug Class": "Class", "Dosage (mg)": "Dose"}
+            rename_map = {"Drug": "Name", "Drug Class": "Class", "Dosage (mg)": "Dose"}
             df = df.rename(columns=rename_map)
             df.columns = [clean_header(c) for c in df.columns]
 
             if 'Name' not in df.columns:
-                st.error(
-                    f"Error: '{selected_file}' must have a column labeled 'Name' (or 'Drug').")
+                st.error(f"Error: '{selected_file}' must have a column labeled 'Name' (or 'Drug').")
                 return pd.DataFrame()
             if 'Class' not in df.columns:
                 df['Class'] = "Uncategorized"
@@ -253,8 +248,6 @@ def load_data():
 df = load_data()
 
 # Robust extraction to handle NaNs and missing values gracefully
-
-
 def extract_numeric(val_str):
     if pd.isna(val_str) or val_str == "":
         return None
@@ -267,6 +260,26 @@ def extract_numeric(val_str):
     if match:
         return float(match.group())
     return None
+
+# NEW: Extracts both Mean and Standard Deviation for Shaded Ribbons
+def extract_with_sd(val_str):
+    if pd.isna(val_str) or val_str == "":
+        return None, 0.0
+    if isinstance(val_str, (int, float)):
+        return float(val_str), 0.0
+    val_str = str(val_str)
+    if '±' in val_str:
+        parts = val_str.split('±')
+        mean_match = re.search(r"[-+]?\d*\.?\d+", parts[0])
+        sd_match = re.search(r"[-+]?\d*\.?\d+", parts[1])
+        mean_val = float(mean_match.group()) if mean_match else None
+        sd_val = float(sd_match.group()) if sd_match else 0.0
+        return mean_val, sd_val
+    else:
+        match = re.search(r"[-+]?\d*\.?\d+", val_str)
+        if match:
+            return float(match.group()), 0.0
+        return None, 0.0
 
 
 # --- NAVIGATION & HEADER ---
@@ -304,8 +317,7 @@ with top_right:
 view_option = st.session_state.current_view
 
 # Active view indicator bar
-_views = ["Table View", "Drugs by Class",
-          "Individual Drug View", "PK Calculator", "PK Graph"]
+_views = ["Table View", "Drugs by Class", "Individual Drug View", "PK Calculator", "PK Graph"]
 _ind_cols = st.columns([1, 2])
 with _ind_cols[1]:
     _bar_cols = st.columns(5, gap="medium")
@@ -335,8 +347,7 @@ if view_option == "Table View":
         else:
             filtered_df = df
         st.write(f"Showing {len(filtered_df)} records")
-        st.dataframe(filtered_df, use_container_width=True,
-                     hide_index=True, height=800)
+        st.dataframe(filtered_df, use_container_width=True, hide_index=True, height=800)
     else:
         st.info("No data available to display in table.")
 
@@ -349,10 +360,8 @@ elif view_option == "Drugs by Class":
             class_subset = df[df['Class'] == drug_class]
             count = len(class_subset)
             with st.expander(f"{drug_class} ({count} Drugs)"):
-                display_cols = [
-                    c for c in class_subset.columns if c != 'Class']
-                st.dataframe(class_subset[display_cols],
-                             hide_index=True, use_container_width=True)
+                display_cols = [c for c in class_subset.columns if c != 'Class']
+                st.dataframe(class_subset[display_cols], hide_index=True, use_container_width=True)
     else:
         st.info("No data available to display classes.")
 
@@ -375,8 +384,7 @@ elif view_option == "Individual Drug View":
             drug = df[df['Name'] == selected_drug_name].iloc[0]
             st.info(f"**Therapeutic Class:** {drug['Class']}")
             st.subheader("Pharmacokinetic Parameters")
-            params = [col for col in df.columns if col not in [
-                'Name', 'Class', 'id', 'ID']]
+            params = [col for col in df.columns if col not in ['Name', 'Class', 'id', 'ID']]
             cols = st.columns(3)
             for i, param in enumerate(params):
                 val = drug[param]
@@ -388,47 +396,36 @@ elif view_option == "Individual Drug View":
 # --- VIEW 4: PK CALCULATOR ---
 elif view_option == "PK Calculator":
     st.header("Pharmacokinetic Calculator")
-    st.markdown(
-        "Estimate missing parameters using standard one-compartment models.")
+    st.markdown("Estimate missing parameters using standard one-compartment models.")
     tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(
         ["Bioavailability (F)", "Cmin (Trough)", "Clearance (CL)", "Half-Life / ke", "Steady State", "Therapeutic Window"])
 
     with tab1:
         st.subheader("Calculate Bioavailability (F)")
-        st.latex(
-            r"F = \frac{AUC_{oral} \cdot Dose_{IV}}{AUC_{IV} \cdot Dose_{oral}}")
+        st.latex(r"F = \frac{AUC_{oral} \cdot Dose_{IV}}{AUC_{IV} \cdot Dose_{oral}}")
         col1, col2 = st.columns(2)
         with col1:
             st.markdown("**Oral Administration**")
-            auc_oral = st.number_input(
-                "AUC (Oral)", min_value=0.0, value=0.0, step=0.1, key="bio_auc_oral")
-            dose_oral = st.number_input(
-                "Dose (Oral)", min_value=0.0, value=0.0, step=1.0, key="bio_dose_oral")
+            auc_oral = st.number_input("AUC (Oral)", min_value=0.0, value=0.0, step=0.1, key="bio_auc_oral")
+            dose_oral = st.number_input("Dose (Oral)", min_value=0.0, value=0.0, step=1.0, key="bio_dose_oral")
         with col2:
             st.markdown("**IV Administration**")
-            auc_iv = st.number_input(
-                "AUC (IV)", min_value=0.0, value=0.0, step=0.1, key="bio_auc_iv")
-            dose_iv = st.number_input(
-                "Dose (IV)", min_value=0.0, value=0.0, step=1.0, key="bio_dose_iv")
+            auc_iv = st.number_input("AUC (IV)", min_value=0.0, value=0.0, step=0.1, key="bio_auc_iv")
+            dose_iv = st.number_input("Dose (IV)", min_value=0.0, value=0.0, step=1.0, key="bio_dose_iv")
         st.markdown("<br>", unsafe_allow_html=True)
         if st.button("Calculate F", use_container_width=True, key="bio_calc_btn"):
             if dose_oral > 0 and auc_iv > 0 and dose_iv > 0:
                 f_absolute = (auc_oral * dose_iv) / (auc_iv * dose_oral)
-                st.success(
-                    f"**Bioavailability (F):** {f_absolute:.4f} ({f_absolute*100:.2f}%)")
+                st.success(f"**Bioavailability (F):** {f_absolute:.4f} ({f_absolute*100:.2f}%)")
             else:
                 st.error("Please enter non-zero values for Doses and IV AUC.")
 
     with tab2:
         st.subheader("Estimate Cmin (Trough Concentration)")
-        st.latex(
-            r"C_{min} = C_{max} \cdot e^{-k_e \cdot t} \quad \text{where} \quad k_e = \frac{0.693}{t_{1/2}}")
-        cmax = st.number_input("Cmax (Peak Concentration)",
-                               min_value=0.0, value=100.0, key="cmin_cmax")
-        t_half = st.number_input(
-            "Half-Life (t½ in hours)", min_value=0.1, value=12.0, key="cmin_thalf")
-        interval = st.number_input(
-            "Time since peak / Dosing Interval (hours)", min_value=0.0, value=24.0, key="cmin_interval")
+        st.latex(r"C_{min} = C_{max} \cdot e^{-k_e \cdot t} \quad \text{where} \quad k_e = \frac{0.693}{t_{1/2}}")
+        cmax = st.number_input("Cmax (Peak Concentration)", min_value=0.0, value=100.0, key="cmin_cmax")
+        t_half = st.number_input("Half-Life (t½ in hours)", min_value=0.1, value=12.0, key="cmin_thalf")
+        interval = st.number_input("Time since peak / Dosing Interval (hours)", min_value=0.0, value=24.0, key="cmin_interval")
         st.markdown("<br>", unsafe_allow_html=True)
         if st.button("Calculate Cmin", use_container_width=True, key="cmin_calc_btn"):
             if t_half > 0:
@@ -442,12 +439,9 @@ elif view_option == "PK Calculator":
     with tab3:
         st.subheader("Calculate Clearance (CL)")
         st.latex(r"CL = \frac{F \cdot Dose}{AUC}")
-        cl_dose = st.number_input(
-            "Dose (mg)", min_value=0.0, value=500.0, key="cl_dose")
-        cl_f = st.number_input(
-            "Bioavailability (F) [0 to 1]", min_value=0.0, max_value=1.0, value=1.0, step=0.05, key="cl_f")
-        cl_auc = st.number_input(
-            "AUC (mg·h/L)", min_value=0.0, value=100.0, key="cl_auc")
+        cl_dose = st.number_input("Dose (mg)", min_value=0.0, value=500.0, key="cl_dose")
+        cl_f = st.number_input("Bioavailability (F) [0 to 1]", min_value=0.0, max_value=1.0, value=1.0, step=0.05, key="cl_f")
+        cl_auc = st.number_input("AUC (mg·h/L)", min_value=0.0, value=100.0, key="cl_auc")
         st.markdown("<br>", unsafe_allow_html=True)
         if st.button("Calculate CL", use_container_width=True, key="cl_calc_btn"):
             if cl_auc > 0:
@@ -459,37 +453,28 @@ elif view_option == "PK Calculator":
     with tab4:
         st.subheader("Half-Life ↔ Elimination Constant Converter")
         st.latex(r"t_{1/2} = \frac{\ln(2)}{k_e} \approx \frac{0.693}{k_e}")
-        calc_mode = st.radio("I want to calculate:", [
-                             "Half-Life (t½)", "Elimination Constant (k)"], key="hl_calc_mode")
+        calc_mode = st.radio("I want to calculate:", ["Half-Life (t½)", "Elimination Constant (k)"], key="hl_calc_mode")
         if calc_mode == "Half-Life (t½)":
-            k_input = st.number_input(
-                "Enter Elimination Constant (k) [1/h]", min_value=0.0001, value=0.1, format="%.4f", key="hl_k_input")
+            k_input = st.number_input("Enter Elimination Constant (k) [1/h]", min_value=0.0001, value=0.1, format="%.4f", key="hl_k_input")
             st.markdown("<br>", unsafe_allow_html=True)
             if st.button("Convert to t½", use_container_width=True, key="hl_calc_btn1"):
                 st.success(f"**Half-Life:** {0.693/k_input:.2f} hours")
         else:
-            t_input = st.number_input(
-                "Enter Half-Life (t½) [hours]", min_value=0.1, value=12.0, key="hl_t_input")
+            t_input = st.number_input("Enter Half-Life (t½) [hours]", min_value=0.1, value=12.0, key="hl_t_input")
             st.markdown("<br>", unsafe_allow_html=True)
             if st.button("Convert to k", use_container_width=True, key="hl_calc_btn2"):
-                st.success(
-                    f"**Elimination Constant (k):** {0.693/t_input:.4f} /h")
+                st.success(f"**Elimination Constant (k):** {0.693/t_input:.4f} /h")
 
     with tab5:
         st.subheader("Steady State Simulator")
-        st.markdown(
-            "Estimate peak, trough, and average concentrations at steady state ($C_{ss}$).")
+        st.markdown("Estimate peak, trough, and average concentrations at steady state ($C_{ss}$).")
         col1, col2 = st.columns(2)
         with col1:
-            ss_dose = st.number_input(
-                "Dose (mg)", min_value=0.0, value=100.0, key="ss_dose")
-            ss_interval = st.number_input(
-                "Dosing Interval (τ in hours)", min_value=1.0, value=24.0, key="ss_interval")
+            ss_dose = st.number_input("Dose (mg)", min_value=0.0, value=100.0, key="ss_dose")
+            ss_interval = st.number_input("Dosing Interval (τ in hours)", min_value=1.0, value=24.0, key="ss_interval")
         with col2:
-            ss_thalf = st.number_input(
-                "Half-Life (t½ in hours)", min_value=0.1, value=12.0, key="ss_thalf")
-            ss_vd = st.number_input(
-                "Volume of Distribution (Vd in L)", min_value=0.1, value=50.0, key="ss_vd")
+            ss_thalf = st.number_input("Half-Life (t½ in hours)", min_value=0.1, value=12.0, key="ss_thalf")
+            ss_vd = st.number_input("Volume of Distribution (Vd in L)", min_value=0.1, value=50.0, key="ss_vd")
         st.markdown("<br>", unsafe_allow_html=True)
         if st.button("Simulate Steady State", use_container_width=True, key="ss_calc_btn"):
             if ss_thalf > 0 and ss_vd > 0:
@@ -515,8 +500,7 @@ elif view_option == "PK Calculator":
                         sim_concs.append(c * math.exp(-k * t_step))
                     c = c * math.exp(-k * ss_interval)
 
-                chart_df = pd.DataFrame(
-                    {"Time (h)": sim_times, "Conc": sim_concs})
+                chart_df = pd.DataFrame({"Time (h)": sim_times, "Conc": sim_concs})
                 ss_chart = alt.Chart(chart_df).mark_line(color="#003366", strokeWidth=2).encode(
                     x=alt.X('Time (h)', title='Time (hours)'),
                     y=alt.Y('Conc', title='Concentration (mg/L)')
@@ -524,36 +508,28 @@ elif view_option == "PK Calculator":
                     labelColor='#003366', titleColor='#003366', gridColor='#C8DCF0', labelFontSize=12
                 ).configure_view(stroke='#0059b3', strokeWidth=1)
                 st.altair_chart(ss_chart, use_container_width=True)
-                st.caption(
-                    "Simulation of accumulation over 5 dosing intervals.")
+                st.caption("Simulation of accumulation over 5 dosing intervals.")
             else:
                 st.error("Half-life and Vd must be > 0.")
 
     with tab6:
         st.subheader("Therapeutic Window Checker")
-        st.markdown(
-            "Check if a measured concentration falls within the safe therapeutic range.")
+        st.markdown("Check if a measured concentration falls within the safe therapeutic range.")
         col1, col2, col3 = st.columns(3)
         with col1:
-            measured_conc = st.number_input(
-                "Measured Concentration", min_value=0.0, value=25.0, key="tw_measured")
+            measured_conc = st.number_input("Measured Concentration", min_value=0.0, value=25.0, key="tw_measured")
         with col2:
-            min_therapeutic = st.number_input(
-                "Min Therapeutic Level", min_value=0.0, value=10.0, key="tw_min")
+            min_therapeutic = st.number_input("Min Therapeutic Level", min_value=0.0, value=10.0, key="tw_min")
         with col3:
-            max_therapeutic = st.number_input(
-                "Max Therapeutic Level", min_value=0.0, value=30.0, key="tw_max")
+            max_therapeutic = st.number_input("Max Therapeutic Level", min_value=0.0, value=30.0, key="tw_max")
         st.markdown("<br>", unsafe_allow_html=True)
         if st.button("Check Status", use_container_width=True, key="tw_check_btn"):
             if measured_conc < min_therapeutic:
-                st.warning(
-                    f"⚠️ **Sub-therapeutic**: {measured_conc} is below the effective range ({min_therapeutic}-{max_therapeutic}).")
+                st.warning(f"⚠️ **Sub-therapeutic**: {measured_conc} is below the effective range ({min_therapeutic}-{max_therapeutic}).")
             elif measured_conc > max_therapeutic:
-                st.error(
-                    f"🚨 **Toxic**: {measured_conc} is above the safe range ({min_therapeutic}-{max_therapeutic}).")
+                st.error(f"🚨 **Toxic**: {measured_conc} is above the safe range ({min_therapeutic}-{max_therapeutic}).")
             else:
-                st.success(
-                    f"✅ **Therapeutic**: {measured_conc} is within the target range ({min_therapeutic}-{max_therapeutic}).")
+                st.success(f"✅ **Therapeutic**: {measured_conc} is within the target range ({min_therapeutic}-{max_therapeutic}).")
 
 # --- VIEW 5: PK GRAPH ---
 elif view_option == "PK Graph":
@@ -561,6 +537,7 @@ elif view_option == "PK Graph":
     col1, col2 = st.columns([1, 2])
 
     used_cmax = None
+    used_cmax_sd = 0.0
     k = None
     val_thalf = None
     cmax_origin_text = "Reported"
@@ -570,8 +547,7 @@ elif view_option == "PK Graph":
     with col1:
         st.subheader("Select Drug")
         drug_choices = {}
-        dose_cols = [c for c in df.columns if any(
-            kw in c.lower() for kw in ['dose', 'strength', 'mg'])]
+        dose_cols = [c for c in df.columns if any(kw in c.lower() for kw in ['dose', 'strength', 'mg'])]
         primary_dose_col = dose_cols[0] if dose_cols else None
 
         for index, row in df.iterrows():
@@ -594,62 +570,43 @@ elif view_option == "PK Graph":
             st.warning("No drugs found matching criteria.")
             selected_graph_drug_label = None
         else:
-            selected_graph_drug_label = st.selectbox(
-                "Choose a Drug to Plot:", list(drug_choices.keys()))
+            selected_graph_drug_label = st.selectbox("Choose a Drug to Plot:", list(drug_choices.keys()))
 
-        # We will parse out all the new specific parameters we need
         if selected_graph_drug_label:
             idx = drug_choices[selected_graph_drug_label]
             drug_row = df.loc[idx]
 
-            # Smart Parameter Extraction using specific keys
-            cmax_col = [c for c in df.columns if "cmax" in c.lower(
-            ) and "css" not in c.lower() and "single" not in c.lower()]
-            val_cmax = extract_numeric(drug_row[cmax_col[0]]) if cmax_col else extract_numeric(
-                drug_row.get("Cmax", None))
+            # Smart Parameter Extraction using specific keys - USE NEW `extract_with_sd` FOR CMAX
+            cmax_col = [c for c in df.columns if "cmax" in c.lower() and "css" not in c.lower() and "single" not in c.lower()]
+            val_cmax, sd_cmax = extract_with_sd(drug_row[cmax_col[0]]) if cmax_col else extract_with_sd(drug_row.get("Cmax", None))
 
             thalf_col = [c for c in df.columns if "half" in c.lower()]
-            val_thalf = extract_numeric(
-                drug_row[thalf_col[0]]) if thalf_col else None
+            val_thalf = extract_numeric(drug_row[thalf_col[0]]) if thalf_col else None
 
             auc_col = [c for c in df.columns if "auc" in c.lower()]
-            val_auc = extract_numeric(
-                drug_row[auc_col[0]]) if auc_col else None
+            val_auc = extract_numeric(drug_row[auc_col[0]]) if auc_col else None
 
             # Extract New Steady State & Window Parameters
-            css_max_col = [c for c in df.columns if "css,max" in c.lower() or (
-                "css" in c.lower() and "max" in c.lower())]
-            val_css_max = extract_numeric(
-                drug_row[css_max_col[0]]) if css_max_col else None
+            css_max_col = [c for c in df.columns if "css,max" in c.lower() or ("css" in c.lower() and "max" in c.lower())]
+            val_css_max = extract_numeric(drug_row[css_max_col[0]]) if css_max_col else None
 
-            css_min_col = [c for c in df.columns if "css,min" in c.lower() or (
-                "css" in c.lower() and "min" in c.lower())]
-            val_css_min = extract_numeric(
-                drug_row[css_min_col[0]]) if css_min_col else None
+            css_min_col = [c for c in df.columns if "css,min" in c.lower() or ("css" in c.lower() and "min" in c.lower())]
+            val_css_min = extract_numeric(drug_row[css_min_col[0]]) if css_min_col else None
 
-            css_avg_col = [c for c in df.columns if "css,avg" in c.lower() or (
-                "css" in c.lower() and "avg" in c.lower())]
-            val_css_avg = extract_numeric(
-                drug_row[css_avg_col[0]]) if css_avg_col else None
+            css_avg_col = [c for c in df.columns if "css,avg" in c.lower() or ("css" in c.lower() and "avg" in c.lower())]
+            val_css_avg = extract_numeric(drug_row[css_avg_col[0]]) if css_avg_col else None
 
-            sd_cmax_col = [
-                c for c in df.columns if "single" in c.lower() and "cmax" in c.lower()]
-            val_sd_cmax = extract_numeric(
-                drug_row[sd_cmax_col[0]]) if sd_cmax_col else val_cmax
+            sd_cmax_col = [c for c in df.columns if "single" in c.lower() and "cmax" in c.lower()]
+            val_sd_cmax = extract_numeric(drug_row[sd_cmax_col[0]]) if sd_cmax_col else val_cmax
 
             lod_col = [c for c in df.columns if "lod" in c.lower()]
-            val_lod = extract_numeric(
-                drug_row[lod_col[0]]) if lod_col else None
+            val_lod = extract_numeric(drug_row[lod_col[0]]) if lod_col else None
 
-            det_window_col = [
-                c for c in df.columns if "window" in c.lower() and "(h)" in c.lower()]
-            val_det_window = extract_numeric(
-                drug_row[det_window_col[0]]) if det_window_col else None
+            det_window_col = [c for c in df.columns if "window" in c.lower() and "(h)" in c.lower()]
+            val_det_window = extract_numeric(drug_row[det_window_col[0]]) if det_window_col else None
 
-            det_window_days_col = [
-                c for c in df.columns if "window" in c.lower() and "days" in c.lower()]
-            val_det_window_days = extract_numeric(
-                drug_row[det_window_days_col[0]]) if det_window_days_col else None
+            det_window_days_col = [c for c in df.columns if "window" in c.lower() and "days" in c.lower()]
+            val_det_window_days = extract_numeric(drug_row[det_window_days_col[0]]) if det_window_days_col else None
 
             # New Feature Selection
             st.markdown("---")
@@ -659,13 +616,12 @@ elif view_option == "PK Graph":
                 "Steady State Oscillation"
             ])
 
-            # Increased maximum slider value to 720 hours (30 days) to accommodate long-acting drugs
             g_time = st.slider("Time Duration to Plot (hours)", 6, 720, 48)
 
             if val_thalf and val_thalf > 0:
                 k = 0.693 / val_thalf
                 used_cmax = val_sd_cmax
-
+                
                 # Render specific controls depending on mode
                 if graph_mode == "Standard Elimination (Single Dose)":
                     plot_source = st.radio("Source for Peak Concentration ($C_{max}$):", [
@@ -673,55 +629,46 @@ elif view_option == "PK Graph":
                     if "Calculate from AUC" in plot_source:
                         if val_auc:
                             used_cmax = val_auc * k
+                            used_cmax_sd = 0.0 # Standard Deviation usually isn't easily extracted from AUC directly
                             cmax_origin_text = "Calculated"
                         else:
-                            st.warning(
-                                "⚠️ No valid AUC found. Using Reported Cmax.")
+                            st.warning("⚠️ No valid AUC found. Using Reported Cmax.")
                             used_cmax = val_cmax
+                            used_cmax_sd = sd_cmax
+                    else:
+                        used_cmax = val_cmax
+                        used_cmax_sd = sd_cmax
 
                     if used_cmax and used_cmax > 0:
                         st.markdown("---")
                         with st.expander("Quick Point Calculator", expanded=False):
-                            calc_tab1, calc_tab2 = st.tabs(
-                                ["Find Conc.", "Find Time"])
+                            calc_tab1, calc_tab2 = st.tabs(["Find Conc.", "Find Time"])
                             with calc_tab1:
-                                in_time = st.number_input("Time (h)", min_value=0.0, value=float(
-                                    val_thalf), step=1.0, key="calc_t")
+                                in_time = st.number_input("Time (h)", min_value=0.0, value=float(val_thalf), step=1.0, key="calc_t")
                                 out_conc = used_cmax * np.exp(-k * in_time)
-                                st.markdown(
-                                    f"**Conc:** `{out_conc:.2f} ng/mL`")
-                                calc_point = pd.DataFrame(
-                                    {'Time (hours)': [in_time], 'Concentration (ng/mL)': [out_conc]})
+                                st.markdown(f"**Conc:** `{out_conc:.2f} ng/mL`")
+                                calc_point = pd.DataFrame({'Time (hours)': [in_time], 'Concentration (ng/mL)': [out_conc]})
                             with calc_tab2:
-                                in_conc = st.number_input(
-                                    "Target Conc (ng/mL)", min_value=0.0, value=float(used_cmax/2), step=1.0, key="calc_c")
+                                in_conc = st.number_input("Target Conc (ng/mL)", min_value=0.0, value=float(used_cmax/2), step=1.0, key="calc_c")
                                 if in_conc >= used_cmax:
-                                    st.error(
-                                        f"Target must be < Peak ({used_cmax:.2f})")
+                                    st.error(f"Target must be < Peak ({used_cmax:.2f})")
                                 elif in_conc <= 0:
                                     st.error("Target must be > 0")
                                 else:
-                                    out_time = -(1/k) * \
-                                        np.log(in_conc / used_cmax)
-                                    st.markdown(
-                                        f"**Time:** `{out_time:.2f} hours`")
-                                    calc_point = pd.DataFrame(
-                                        {'Time (hours)': [out_time], 'Concentration (ng/mL)': [in_conc]})
+                                    out_time = -(1/k) * np.log(in_conc / used_cmax)
+                                    st.markdown(f"**Time:** `{out_time:.2f} hours`")
+                                    calc_point = pd.DataFrame({'Time (hours)': [out_time], 'Concentration (ng/mL)': [in_conc]})
 
                         st.markdown("---")
-                        # Default to the dataset's LOD
-                        lod_default = float(
-                            val_lod) if val_lod is not None else 0.0
-                        lod = st.number_input(
-                            "Limit of Detection (LoD) [ng/mL]", min_value=0.0, value=lod_default, step=0.1, help="Show a horizontal line for the Limit of Detection")
+                        lod_default = float(val_lod) if val_lod is not None else 0.0
+                        lod = st.number_input("Limit of Detection (LoD) [ng/mL]", min_value=0.0, value=lod_default, step=0.1, help="Show a horizontal line for the Limit of Detection")
 
     with col2:
         if selected_graph_drug_label:
             st.subheader(graph_mode)
 
             if not val_thalf or val_thalf <= 0:
-                st.error(
-                    "Could not extract valid numerical Half-Life for this drug to plot.")
+                st.error("Could not extract valid numerical Half-Life for this drug to plot.")
             else:
                 # -------------------------------------------------------------
                 # GRAPH 1: STANDARD ELIMINATION
@@ -730,12 +677,31 @@ elif view_option == "PK Graph":
                     if used_cmax and used_cmax > 0:
                         time_points = np.linspace(0, g_time, num=100)
                         concentrations = used_cmax * np.exp(-k * time_points)
-                        chart_data = pd.DataFrame(
-                            {"Time (hours)": time_points, "Concentration (ng/mL)": concentrations})
+                        
+                        # Calculate Shaded Ribbon Bounds based on Extracted SD
+                        upper_bound = (used_cmax + used_cmax_sd) * np.exp(-k * time_points)
+                        lower_bound = np.maximum(0, (used_cmax - used_cmax_sd) * np.exp(-k * time_points))
 
+                        chart_data = pd.DataFrame({
+                            "Time (hours)": time_points, 
+                            "Concentration (ng/mL)": concentrations,
+                            "Upper": upper_bound,
+                            "Lower": lower_bound
+                        })
+
+                        # 1. Main Line
                         final_chart = alt.Chart(chart_data).mark_line(color="#003366", strokeWidth=3).encode(
                             x='Time (hours)', y='Concentration (ng/mL)', tooltip=['Time (hours)', 'Concentration (ng/mL)']
                         )
+                        
+                        # 2. Add Shaded Variance Ribbon if SD exists
+                        if used_cmax_sd > 0:
+                            band_chart = alt.Chart(chart_data).mark_area(opacity=0.2, color='#3b82f6').encode(
+                                x='Time (hours)',
+                                y='Lower',
+                                y2='Upper'
+                            )
+                            final_chart = band_chart + final_chart
 
                         # Apply Quick Point overlay
                         if calc_point is not None:
@@ -749,19 +715,17 @@ elif view_option == "PK Graph":
                             final_chart += alt.Chart(lod_df).mark_rule(
                                 color='#e67e22', strokeDash=[5, 5], strokeWidth=2).encode(y='y')
 
-                        # Auto-Plot Detection Window Line & Label with Days
+                        # Auto-Plot Detection Window Line & Label
                         if val_det_window and val_det_window <= g_time:
                             det_df = pd.DataFrame({'x': [val_det_window]})
                             final_chart += alt.Chart(det_df).mark_rule(
                                 color='#c0392b', strokeDash=[3, 3], strokeWidth=2).encode(x='x')
 
-                            # Build the dynamic label showing hours and days
                             label_text = f'Det. Window: {val_det_window}h'
                             if val_det_window_days:
                                 label_text += f' ({val_det_window_days} days)'
 
-                            text_df = pd.DataFrame({'x': [val_det_window], 'y': [
-                                                   used_cmax * 0.9], 'text': [label_text]})
+                            text_df = pd.DataFrame({'x': [val_det_window], 'y': [used_cmax * 0.9], 'text': [label_text]})
                             final_chart += alt.Chart(text_df).mark_text(
                                 align='left', dx=8, color='#c0392b', fontWeight='bold').encode(x='x', y='y', text='text')
 
@@ -771,8 +735,12 @@ elif view_option == "PK Graph":
                         ).configure_view(stroke='#0059b3', strokeWidth=1)
 
                         st.altair_chart(final_chart, use_container_width=True)
-                        st.markdown(
-                            f"**Plotting Parameters:** Cmax ({cmax_origin_text}) = {used_cmax:.2f} ng/mL, Half-Life = {val_thalf}h")
+                        
+                        # Inform User if Ribbon is Active
+                        sd_text = f" ± {used_cmax_sd:.2f}" if used_cmax_sd > 0 else ""
+                        st.markdown(f"**Plotting Parameters:** Cmax ({cmax_origin_text}) = {used_cmax:.2f}{sd_text} ng/mL, Half-Life = {val_thalf}h")
+                        if used_cmax_sd > 0:
+                            st.caption("🔹 The shaded blue ribbon represents the biological variance (± Standard Deviation) based on the input dataset.")
                     else:
                         st.error("Invalid or missing Cmax value. Cannot plot.")
 
@@ -819,11 +787,10 @@ elif view_option == "PK Graph":
                 # -------------------------------------------------------------
                 elif graph_mode == "Steady State Oscillation":
                     if val_css_max and val_css_min:
-                        # Estimate Dosing Interval (Tau) from Css_max and Css_min
                         try:
                             tau = -math.log(val_css_min / val_css_max) / k
                             if pd.isna(tau) or tau <= 0:
-                                tau = 24.0  # default fallback
+                                tau = 24.0  
                         except (ValueError, ZeroDivisionError, TypeError):
                             tau = 24.0
 
@@ -832,7 +799,6 @@ elif view_option == "PK Graph":
                         chart_data = pd.DataFrame(
                             {"Time (hours)": time_points, "Concentration (ng/mL)": concs})
 
-                        # Base Decay Curve
                         base_chart = alt.Chart(chart_data).mark_line(color="#003366", strokeWidth=4).encode(
                             x=alt.X(
                                 'Time (hours)', title=f'Time Within Dosing Interval ({tau:.1f}h)'),
@@ -840,7 +806,6 @@ elif view_option == "PK Graph":
                                     scale=alt.Scale(domain=[0, val_css_max * 1.2]))
                         )
 
-                        # Horizontal Threshold Bands
                         rules = []
                         rules.append(pd.DataFrame(
                             {'y': [val_css_max], 'label': ['Css,max (Peak)']}))
@@ -852,7 +817,6 @@ elif view_option == "PK Graph":
 
                         rules_df = pd.concat(rules)
 
-                        # Draw Rules
                         rules_chart = alt.Chart(rules_df).mark_rule(strokeDash=[4, 4], strokeWidth=2).encode(
                             y='y',
                             color=alt.Color('label:N', scale=alt.Scale(
@@ -862,7 +826,6 @@ elif view_option == "PK Graph":
                             ))
                         )
 
-                        # Draw Text Labels
                         text_chart = alt.Chart(rules_df).mark_text(align='left', dx=5, dy=-8, fontWeight='bold', fontSize=12).encode(
                             y='y',
                             text='label',

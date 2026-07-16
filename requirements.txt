@@ -4,8 +4,3 @@ openpyxl
 numpy
 altair
 plotly
-os
-math
-re
-io
-datetime

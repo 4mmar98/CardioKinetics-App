@@ -1,5 +1,11 @@
 streamlit
 pandas
+openpyxl
 numpy
 altair
-openpyxl
+plotly
+os
+math
+re
+io
+datetime

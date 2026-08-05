@@ -4,3 +4,4 @@ openpyxl
 numpy
 altair
 plotly
+starlette<0.38.0
